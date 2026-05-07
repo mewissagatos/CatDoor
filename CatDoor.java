@@ -12,7 +12,13 @@ public class CatDoor {
             System.out.println("[3] Dono abriu manualmente...");
             System.out.println("[4] Estado atual.");
             System.out.println("[5] Sair\n");
-            int opcao = sc.nextInt();
+            int opcao = 0;
+            if (sc.hasNextInt()) {
+                opcao = sc.nextInt();
+            } else {
+                sc.next(); // descarta o texto invalido, se nao quebrava o programa
+                System.out.println("Digite apenas numeros de 1 a 5!");
+            }
             switch (opcao){
                 case 1:
                     p = true; //gato chegou!
