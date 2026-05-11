@@ -1,7 +1,7 @@
 import java.util.Scanner;
 public class CatDoor {
     public static void main(String[] args){
-        boolean p = false, q = false, r = false, s = false;
+        boolean p = false, q = false, r = false, s = true;
         // coleira detectada? esta no horario? dono abriu? gato dentro?
         Scanner sc = new Scanner(System.in);
         boolean rodando = true;
@@ -9,7 +9,7 @@ public class CatDoor {
             System.out.println("\n•┈୨ Porta Inteligente para Gatos ୧┈•");
             System.out.println("[1] Simular chegada do gatinho!");
             System.out.println("[2] Ligar/Desligar horario permitido.");
-            System.out.println("[3] Dono abriu manualmente...");
+            System.out.println("[3] Dono abre/fecha manualmente... ");
             System.out.println("[4] Estado atual.");
             System.out.println("[5] Sair\n");
             int opcao = 0;
@@ -24,18 +24,18 @@ public class CatDoor {
                     p = true; //gato chegou!
                     boolean pEntra = r || (p && !s && q); //proposiçao de entrada
                     boolean pSai = r || (p && s && q); //proposiçao de saida
-                    if(pEntra && !s){
+                    if (pEntra && !s) {
                         s = true;
-                        System.out.println("ฅ₍ᓀ‸ᓂマ ੭♪ \nGatinho Dentro! ");
+                        System.out.println("ฅ₍ᓀ‸ᓂマ ੭♪ \nGatinho Dentro!");
+                        if (r) System.out.println("(Porta aberta pelo dono!)");
                     } else if (pSai && s) {
                         s = false;
                         System.out.println("Gatinho foi explorar! \n(ˆつ⩊⊂ˆ)੭ Tchau Gatinho!");
-                    }else {
+                        if (r) System.out.println("(Porta aberta pelo dono!)");
+                    } else {
                         System.out.println("Porta Negada.");
-                        if(!q) {
-                            System.out.println("Fora do horario permitido.");
+                        if (!q) System.out.println("Fora do horario permitido.");
                         }
-                    }
                     p = false; //sensor reseta
                     break;
                 case 2:
@@ -47,17 +47,12 @@ public class CatDoor {
                     }
                     break;
                 case 3:
-                    r = true; //entrada manual
-                    boolean pEntraM = r || (p&& !s && q); //proposicao 1, com r = true sempre vai ser V!
-                    boolean pSaiM = r || (p && s && q); // proposicao 2, r = true sempre V
-                    if(pEntraM && !s){
-                        s = true;
-                        System.out.println("Dono abriu! Gatinho entrou. =^.^=");
-                    }else if(pSaiM && s){
-                        s = false;
-                        System.out.println("Dono abriu! Gatinho saiu. (=^..^=)/");
+                    r = !r; //abre se estava fechado, fecha se estava aberto
+                    if(r){
+                        System.out.println("Dono ABRIU a porta! \nGatinho livre. =^.^=");
+                    }else{
+                        System.out.println("Dono FECHOU a porta! \nVoltando ao automatico...");
                     }
-                    r = false; // entrada manual resetada
                     break;
                 case 4:
                     System.out.println("\n•┈୨ Estado Atual ୧┈•");
